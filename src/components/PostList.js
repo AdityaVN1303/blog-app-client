@@ -60,9 +60,9 @@ const PostList = () => {
 
       </div>
         {
-          filteredPosts.length > 0 && filteredPosts.map((item)=>{
+          filteredPosts.length > 0 ? filteredPosts.map((item)=>{
             return <Post key={item._id} post={item}/>
-          })
+          }) : <h1 className='text-center font-bold text-2xl'>No Posts Available</h1>
         }
     </div>
   )

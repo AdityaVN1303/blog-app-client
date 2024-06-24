@@ -17,7 +17,7 @@ import EditPost from './components/EditPost';
 
 
 // search --- #
-// tags
+// tags --- #
 // protecting routes using stores --- #
 // myblogs section 
 // edit and delete posts option --- #

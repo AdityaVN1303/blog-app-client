@@ -14,6 +14,7 @@ const Post = ({post}) => {
           <div className="details flex space-x-3 font-semibold text-sm">
             <p>{post?.author?.username}</p>
             <p>{format(new Date(post?.createdAt) , 'MMM d, yyyy HH:mm')}</p>
+            <p className='bg-blue-500 text-white px-2 rounded-xl'>{post?.tag}</p>
           </div>
           <p className=''>
             {post?.description.slice(0 ,350)}

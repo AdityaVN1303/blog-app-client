@@ -3,12 +3,14 @@ import { MdDarkMode } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
 import {Link, useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoggedIn, setUserId } from '../utils/authSlice';
+import DropDown from './DropDown';
 
 const Header = ({clicked , mode}) => {
 
-  const [username, setUsername] = useState("");
+  const [iamge , setImage] = useState("");
+  const userId = useSelector((store)=>store.auth.userId);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,7 +24,7 @@ const Header = ({clicked , mode}) => {
 
       const answer = await response.json();
       // console.log(answer);
-      setUsername(answer.username);
+      setImage(answer.image);
 
      } catch (error) {
       console.log(error);
@@ -62,10 +64,9 @@ const Header = ({clicked , mode}) => {
           }
         </div>
         {
-          username ?
+          userId ?
           <>
-          <button className='hover:bg-blue-300 px-1'><Link to="/create">Create New Post</Link></button>
-          <button className='hover:bg-blue-300 px-1' onClick={logout}>Logout</button>
+          <DropDown logout={logout}/>
           </> : <button className='hover:bg-blue-300 px-1'><Link to="/auth/login">Sign in</Link></button>
 
 

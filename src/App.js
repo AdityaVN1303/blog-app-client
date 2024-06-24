@@ -18,9 +18,9 @@ function App() {
   }
 
   return (
-    <div className={`App font-abc duration-300 min-h-screen ${mode === 'dark' ? "text-white bg-black" : "text-black bg-white"}`} >
+    <div className={`App font-abc duration-300 ${mode === 'dark' ? "text-white bg-black" : "text-black bg-white"}`} >
       <Header clicked={handleClick} mode={mode}/>
-      <div className="body pt-28">
+      <div className="body pt-28 min-h-screen">
         <Outlet/>
       </div>
       <Footer/>
