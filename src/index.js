@@ -11,13 +11,16 @@ import reportWebVitals from './reportWebVitals';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CreatePost from './components/CreatePost';
+import { Provider } from 'react-redux';
+import store from './utils/store';
+import EditPost from './components/EditPost';
 
 
-// search
+// search --- #
 // tags
-// protecting routes using stores
+// protecting routes using stores --- #
 // myblogs section 
-// edit and delete posts option
+// edit and delete posts option --- #
 // edit userinfo option 
 // View Count 
 // Popluar posts by view Count
@@ -42,6 +45,10 @@ const router = createBrowserRouter([
         path : "/create",
     element : <CreatePost/>
       },
+      {
+        path : "/create/:id",
+    element : <EditPost/>
+      },
     ]
   } , 
   {
@@ -58,8 +65,10 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+      <Provider store={store}>
     <RouterProvider router={router}/>
     <ToastContainer/>
+    </Provider>
   </React.StrictMode>
 );
 reportWebVitals();

@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
 import {toast} from 'react-toastify'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 
 
-const CreatePost = () => {
+const EditPost = () => {
 
   const isLoggedIn = useSelector((store)=>store.auth.isLoggedin);
+
+  const {id} = useParams();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -38,6 +40,26 @@ const CreatePost = () => {
       navigate('/');
     }
   }, [isLoggedIn , navigate])
+
+  useEffect(() => {
+    const getEditData = async ()=>{
+        try {
+            const response = await fetch("http://localhost:8000/post/" + id);
+            const answer = await response.json();
+            console.log(answer);
+            if (answer) {
+                setTitle(answer.title);
+                setDescription(answer.description);
+                setEssay(answer.essay);
+                setFiles(answer.cover);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    getEditData()
+  }, [])
+  
   
 
   const handleClick = async ()=>{
@@ -49,12 +71,15 @@ const CreatePost = () => {
       const data = new FormData();
       data.append('title' , title);
       data.append('description' , description);
-      data.append('file' , files);
       data.append('essay' , essay);
-      // console.log(files);
+      data.append('id' , id);
+      if (files) {
+        data.append('file' , files);
+      }
+
 
       const response = await fetch("http://localhost:8000/post" , {
-        method : 'POST',
+        method : 'PUT',
         body : data, 
         credentials : 'include'
       })
@@ -65,8 +90,8 @@ const CreatePost = () => {
         toast(error);
       }
 
-      if (answer?.title) {
-        toast("Post Created Successfully !");
+      if (answer?.acknowledged) {
+        toast("Post Updated Successfully !");
         navigate('/');
       }
 
@@ -80,14 +105,14 @@ const CreatePost = () => {
   return (
     <div className="create max-w-5xl mx-auto text-center flex flex-col justify-center items-center mt-5 mb-56 space-y-5">
       <h1 className='font-bold text-2xl'>Create New Post</h1>
-       <input type="text" onChange={(e)=>{setTitle(e.target.value)}} placeholder='title' className='w-full p-2 bg-transparent border border-slate-400' />
-       <input type="text" onChange={(e)=>{setDescription(e.target.value)}} placeholder='description' className='w-full p-2 bg-transparent border border-slate-400' />
+       <input type="text" onChange={(e)=>{setTitle(e.target.value)}} placeholder='title' value={title} className='w-full p-2 bg-transparent border border-slate-400' />
+       <input type="text" onChange={(e)=>{setDescription(e.target.value)}} placeholder='description' value={description} className='w-full p-2 bg-transparent border border-slate-400' />
        <input type="file" onChange={(e)=>setFiles(e.target.files[0])} className='w-full p-2 bg-transparent border border-slate-400' />
        <ReactQuill theme='snow' className='w-full' onChange={data=>setEssay(data)} value={essay} modules={modules} formats={formats}/>
-        <button onClick={handleClick} className='bg-green-800 text-white p-4 w-full text-xl'>Create Post</button>
+        <button onClick={handleClick} className='bg-green-800 text-white p-4 w-full text-xl'>Update Post</button>
 
     </div>
   )
 }
 
-export default CreatePost
+export default EditPost

@@ -3,12 +3,15 @@ import { MdDarkMode } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
 import {Link, useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { setIsLoggedIn, setUserId } from '../utils/authSlice';
 
 const Header = ({clicked , mode}) => {
 
   const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const isUserLoggedIn = async ()=>{
@@ -37,8 +40,10 @@ const Header = ({clicked , mode}) => {
     const answer = await response.json();
     if (answer?.message) {
       toast(answer.message);
+      dispatch(setUserId(""));
+      dispatch(setIsLoggedIn(false));
+      navigate('/auth/login');
     }
-    navigate('/auth/login');
    } catch (error) {
     console.log(error);
    }
@@ -47,8 +52,8 @@ const Header = ({clicked , mode}) => {
   
 
   return (
-    <div className="header flex flex-col lg:flex-row space-y-2 justify-between items-center px-10 py-2 bg-blue-700 text-white fixed left-0 right-0 top-0">
-        <h1 className='font-bold text-3xl'>MyBlog</h1>
+    <div className="header flex flex-col z-50 lg:flex-row space-y-2 justify-between items-center px-10 py-2 bg-blue-700 text-white fixed left-0 right-0 top-0">
+        <h1 className='font-bold text-3xl'><Link to="/">MyBlog</Link></h1>
         <div className="user-entry space-x-3 text-lg flex">
         <div className="mode rounded-full bg-blue-400 p-1" onClick={clicked}>
           {

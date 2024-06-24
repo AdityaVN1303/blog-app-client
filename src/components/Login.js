@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import {Link, useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
+import { setIsLoggedIn, setUserId } from '../utils/authSlice';
 
 const Login = () => {
 
@@ -8,6 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async ()=>{
    try {
@@ -24,6 +27,8 @@ const Login = () => {
     }
     if (answer.loggedIn) {
       toast("Logged In Successfully");
+      dispatch(setUserId(answer.id));
+      dispatch(setIsLoggedIn(true));
       navigate('/');
     }
    } catch (error) {
