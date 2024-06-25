@@ -11,6 +11,7 @@ const PostList = () => {
   const [posts, setPosts] = useState([])
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [popularPosts, setPopularPosts] = useState([]);
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
   useEffect(() => {
     const getPosts = async ()=>{
@@ -38,12 +39,14 @@ const PostList = () => {
   }, [])
 
   const handleSearch = (search)=>{
+    setIsSearchActive(true);
     console.log(posts[0]);
     if (search) {
       const filteredValues = posts.filter((item)=>item.title.toLowerCase().includes(search))
     setFilteredPosts(filteredValues);
     }
     else{
+      setIsSearchActive(false);
       setFilteredPosts(posts);
     }
   }
@@ -72,25 +75,23 @@ const PostList = () => {
       <Dropdown options={options} value={defaultOption} onChange={_onSelect} placeholder="Select an option" />
       </div>
 
-      <div className="popular">
+      {!isSearchActive && <div className="popular">
         <h1 className='font-bold text-3xl mt-5 text-white bg-gradient-to-r from-slate-400 to-indigo-600 rounded-md w-full p-2'>Popular Posts</h1>
         <div className=' h-[28rem] mb-10'>
         {popularPosts.length !== 0 &&
-        <Carousel slideInterval={2000}>
+        <Carousel slideInterval={2000} className='h-full' indicators={false}>
           {
             popularPosts.map((item)=>{
-              return <Link key={item?._id} to={`/post/${item?._id}`}>
-                <div className="flex flex-col items-center space-y-5 relative rounded-md">
+              return <Link key={item?._id} className='flex flex-col items-center space-y-5 relative rounded-md' to={`/post/${item?._id}`}>
                   <h1 className='font-bold text-3xl absolute top-10 text-white p-1 bg-blue-400 shadow-2xl'>{item?.title}</h1>
                   <img src={`http://localhost:8000/${item?.cover}`} className='w-full rounded-md object-cover h-[26rem]'  alt="..." />
-                </div>
                 </Link>
           
             })
           }
         </Carousel>}
         </div>
-      </div>
+      </div>}
       <h1 className='font-bold text-3xl mb-5 text-white bg-gradient-to-r from-slate-400 to-indigo-600 rounded-md w-full p-2'>Latest Posts</h1>
         {
           filteredPosts.length > 0 ? filteredPosts.map((item)=>{
