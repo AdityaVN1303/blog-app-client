@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import {useNavigate, useParams} from 'react-router-dom';
+// import React, { useEffect, useState } from 'react'
+import {useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify'
 
-const DialogBox = ({handleCancel}) => {
+const DialogBox = ({handleCancel , id}) => {
 
-    const {id} = useParams();
     const navigate = useNavigate();
 
     const deletePost = async ()=>{

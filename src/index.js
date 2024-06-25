@@ -14,14 +14,16 @@ import CreatePost from './components/CreatePost';
 import { Provider } from 'react-redux';
 import store from './utils/store';
 import EditPost from './components/EditPost';
+import Dashboard from './components/Dashboard';
+import EditUser from './components/EditUser';
 
 
 // search --- #
 // tags --- #
 // protecting routes using stores --- #
-// myblogs section 
 // edit and delete posts option --- #
-// edit userinfo option 
+// edit userinfo option --- #
+// myblogs section 
 // View Count 
 // Popluar posts by view Count
 // Latest Posts 
@@ -49,6 +51,10 @@ const router = createBrowserRouter([
         path : "/create/:id",
     element : <EditPost/>
       },
+      {
+        path : "/dashboard",
+        element : <Dashboard/>
+      } , 
     ]
   } , 
   {
@@ -58,6 +64,10 @@ const router = createBrowserRouter([
   {
     path : "/auth/register",
     element : <Register/>
+  } , 
+  {
+    path : "/user/:id",
+    element : <EditUser/>
   } , 
 
 ])

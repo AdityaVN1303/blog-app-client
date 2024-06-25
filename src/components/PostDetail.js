@@ -39,7 +39,7 @@ const PostDetail = () => {
 
   return (
     <div className="post-content max-w-3xl mx-auto px-5 my-5 space-y-3">
-      {dialog && <DialogBox handleCancel={handleCancel}/>}
+      {dialog && <DialogBox handleCancel={handleCancel} id={id}/>}
       {
         data && <>
         {

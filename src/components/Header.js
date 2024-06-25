@@ -4,33 +4,34 @@ import { CiLight } from "react-icons/ci";
 import {Link, useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsLoggedIn, setUserId } from '../utils/authSlice';
+import { setIsLoggedIn, setUser, setUserId } from '../utils/authSlice';
 import DropDown from './DropDown';
 
 const Header = ({clicked , mode}) => {
 
-  const [iamge , setImage] = useState("");
+  const [image , setImage] = useState("");
   const userId = useSelector((store)=>store.auth.userId);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const isUserLoggedIn = async ()=>{
+    const getProfilePic = async ()=>{
      try {
-      const response = await fetch('http://localhost:8000/profile' , {
+      const response = await fetch('http://localhost:8000/user/'+userId , {
         credentials : 'include'
       })
 
       const answer = await response.json();
-      // console.log(answer);
-      setImage(answer.image);
+      // console.log(answer?.image);
+      dispatch(setUser(answer))
+      setImage(answer?.image);
 
      } catch (error) {
       console.log(error);
      }
     }
-    isUserLoggedIn();
+    getProfilePic();
   }, [])
 
   const logout = async ()=>{
@@ -66,7 +67,7 @@ const Header = ({clicked , mode}) => {
         {
           userId ?
           <>
-          <DropDown logout={logout}/>
+          <DropDown logout={logout} image={image}/>
           </> : <button className='hover:bg-blue-300 px-1'><Link to="/auth/login">Sign in</Link></button>
 
 

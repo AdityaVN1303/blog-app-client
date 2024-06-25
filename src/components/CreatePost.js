@@ -54,11 +54,17 @@ const CreatePost = () => {
         toast("Please Fill all the Details !");
         return; 
       }
+      const value = essay;
+      const modifiedContent = value.replace(/<h([12])>(.*?)<\/h\1>/g, (match, tag) => {
+        return `<h${tag} class="text-2xl">` + match.slice(tag.length + 3, -tag.length - 4) + `</h${tag}>`;
+      });
+      console.log(modifiedContent);
+
       const data = new FormData();
       data.append('title' , title);
       data.append('description' , description);
       data.append('file' , files);
-      data.append('essay' , essay);
+      data.append('essay' , modifiedContent);
       data.append('tag' , tag);
       // console.log(files);
 

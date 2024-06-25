@@ -76,10 +76,16 @@ const EditPost = () => {
         toast("Please Fill all the Details !");
         return; 
       }
+
+      const value = essay;
+      const modifiedContent = value.replace(/<h([12])>(.*?)<\/h\1>/g, (match, tag) => {
+        return `<h${tag} class="text-2xl">` + match.slice(tag.length + 3, -tag.length - 4) + `</h${tag}>`;
+      });
+
       const data = new FormData();
       data.append('title' , title);
       data.append('description' , description);
-      data.append('essay' , essay);
+      data.append('essay' , modifiedContent);
       data.append('id' , id);
       data.append('tag' , tag);
       if (files) {
@@ -123,7 +129,7 @@ const EditPost = () => {
       <input type="text" onChange={(e)=>{setTitle(e.target.value)}} placeholder='title' value={title} className='w-full p-2 bg-transparent border border-slate-400' />
       <Dropdown options={options} value={defaultOption} onChange={_onSelect} placeholder="Select an option" />
       </div>
-       <input type="text" onChange={(e)=>{setDescription(e.target.value)}} placeholder='description' value={description} className='w-full p-2 bg-transparent border border-slate-400' />
+       <input type="text" clas onChange={(e)=>{setDescription(e.target.value)}} placeholder='description' value={description} className='w-full p-2 bg-transparent border border-slate-400' />
        <input type="file" onChange={(e)=>setFiles(e.target.files[0])} className='w-full p-2 bg-transparent border border-slate-400' />
        <ReactQuill theme='snow' className='w-full' onChange={data=>setEssay(data)} value={essay} modules={modules} formats={formats}/>
         <button onClick={handleClick} className='bg-green-800 text-white p-4 w-full text-xl'>Update Post</button>
