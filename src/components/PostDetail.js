@@ -4,14 +4,17 @@ import {format} from 'date-fns'
 import {useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
 import { MdDelete } from 'react-icons/md';
-import { FaRegEdit } from "react-icons/fa";
+import { FaHeart, FaRegEdit, FaRegHeart } from "react-icons/fa";
 import DialogBox from './DialogBox';
+import { toast } from 'react-toastify';
 
 const PostDetail = () => {
 
   const [data, setData] = useState({});
   const [authorId, setAuthorId] = useState("");
   const [dialog, setDialog] = useState(false);
+  const [likeStatus, setLikeStatus] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
 
   const userId = useSelector((store)=>store.auth.userId);
 
@@ -19,21 +22,75 @@ const PostDetail = () => {
 
   useEffect(() => {
     const getPostDetails = async ()=>{
+      window.scrollTo(0 , 0);
       try {
         const response = await fetch("http://localhost:8000/post/" + id);
         const answer = await response.json();
-        console.log(answer);
+        console.log(answer?.viewCount);
         setData(answer);
+        setLikeCount(answer?.likes?.length);
         setAuthorId(answer.author._id);
+
+        console.log(answer.likes);
+        for (let i=0; i<answer.likes.length; i++) {
+          if (answer.likes[i].toString() === userId) {
+            setLikeStatus(true);
+            return;
+          }
+        }
+        setLikeStatus(false);
+
       } catch (error) {
         console.log(error);
       }
     }
     getPostDetails();
   }, [])
+  
+  
 
   const handleCancel = ()=>{
     setDialog(false);
+  }
+
+  const handleLikes = async ()=>{
+    if (!likeStatus) {
+      try {
+        // const data = JSON.stringify({userId , id});
+        console.log(userId);
+        const response = await fetch(`http://localhost:8000/like/${id}` , {
+          method : 'PUT',
+          headers : {'Content-Type' : 'application/json'},
+          credentials : 'include'
+        })
+        const answer = await response.json();
+        setLikeCount(answer.likes.length);
+        setLikeStatus(true);
+        toast("You Liked the Post !");
+        console.log(answer);
+  
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    else{
+      try {
+        console.log(userId);
+        const response = await fetch(`http://localhost:8000/unlike/${id}` , {
+          method : 'PUT',
+          headers : {'Content-Type' : 'application/json'},
+          credentials : 'include'
+        })
+        const answer = await response.json();
+        setLikeCount(answer.likes.length);
+        setLikeStatus(false);
+        toast("You Unliked the Post !");
+        console.log(answer);
+  
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
   
 
@@ -58,6 +115,15 @@ const PostDetail = () => {
          {
           data?.createdAt && <p className='bg-blue-500 text-white px-1'>{format(new Date(data?.createdAt) , 'MMM d, yyyy HH:mm')}</p>
          }
+        {
+          userId && <button className='flex items-center space-x-1' onClick={handleLikes}>
+          {
+            !likeStatus ? <FaRegHeart /> :
+            <FaHeart />
+          }
+          <span>{likeCount}</span>
+          </button>
+        }
         </div>
         <hr />
         <p className='text-sm'>{data?.description}</p>

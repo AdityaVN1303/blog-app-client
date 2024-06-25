@@ -23,7 +23,7 @@ const EditPost = () => {
   const navigate = useNavigate();
 
   const options = [
-    'psychology', 'food', 'edcation' , 'programming' , 'gaming'
+    'psychology', 'food', 'education' , 'programming' , 'gaming'
   ];
   const defaultOption = options[0];
 
@@ -123,7 +123,7 @@ const EditPost = () => {
 
 
   return (
-    <div className="create max-w-5xl mx-auto text-center flex flex-col justify-center items-center mt-5 mb-56 space-y-5">
+    <div className="create max-w-5xl mx-auto text-center flex flex-col justify-center items-center mt-5 mb-56 space-y-5 px-5">
       <h1 className='font-bold text-2xl'>Create New Post</h1>
       <div className="flex items-center w-full">
       <input type="text" onChange={(e)=>{setTitle(e.target.value)}} placeholder='title' value={title} className='w-full p-2 bg-transparent border border-slate-400' />

@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react'
 import Post from './Post'
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+// import Carousal from './Carousal';
+import { Carousel } from 'flowbite-react';
+import { Link } from 'react-router-dom';
 
 const PostList = () => {
 
   const [posts, setPosts] = useState([])
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [popularPosts, setPopularPosts] = useState([]);
 
   useEffect(() => {
     const getPosts = async ()=>{
@@ -16,6 +20,16 @@ const PostList = () => {
       console.log(answer);
       setPosts(answer);
       setFilteredPosts(answer);
+
+      function compareByViewCount(a, b) {
+        return b.viewCount - a.viewCount;
+      }
+
+      const sortedData = [...answer]?.sort(compareByViewCount);
+      console.log(sortedData);
+      setPopularPosts(sortedData?.slice(0, 3));
+
+
       } catch (error) {
         console.log(error);
       }
@@ -35,7 +49,7 @@ const PostList = () => {
   }
 
   const options = [
-    'All', 'psychology', 'food', 'edcation' , 'programming' , 'gaming'
+    'All', 'psychology', 'food', 'education' , 'programming' , 'gaming'
   ];
   const defaultOption = options[0];
 
@@ -48,17 +62,36 @@ const PostList = () => {
       const filteredValues = posts.filter((item)=>item.tag === option.value);
       setFilteredPosts(filteredValues);
     }
-    console.log(option.value);
   }
   
 
   return (
-    <div className="list max-w-5xl mx-auto mb-3">
+    <div className="list max-w-5xl mx-auto mb-3 px-5">
       <div className="filter space-x-2 flex items-center">
       <input onChange={(e)=>{handleSearch(e.target.value)}} type="text" placeholder='Search Post' className='w-full p-2 rounded-md bg-transparent border border-slate-400 text-blue-500 my-5' />
       <Dropdown options={options} value={defaultOption} onChange={_onSelect} placeholder="Select an option" />
-
       </div>
+
+      <div className="popular">
+        <h1 className='font-bold text-3xl mt-5 text-white bg-gradient-to-r from-slate-400 to-indigo-600 rounded-md w-full p-2'>Popular Posts</h1>
+        <div className=' h-[28rem] mb-10'>
+        {popularPosts.length !== 0 &&
+        <Carousel slideInterval={2000}>
+          {
+            popularPosts.map((item)=>{
+              return <Link key={item?._id} to={`/post/${item?._id}`}>
+                <div className="flex flex-col items-center space-y-5 relative rounded-md">
+                  <h1 className='font-bold text-3xl absolute top-10 text-white p-1 bg-blue-400 shadow-2xl'>{item?.title}</h1>
+                  <img src={`http://localhost:8000/${item?.cover}`} className='w-full rounded-md object-cover h-[26rem]'  alt="..." />
+                </div>
+                </Link>
+          
+            })
+          }
+        </Carousel>}
+        </div>
+      </div>
+      <h1 className='font-bold text-3xl mb-5 text-white bg-gradient-to-r from-slate-400 to-indigo-600 rounded-md w-full p-2'>Latest Posts</h1>
         {
           filteredPosts.length > 0 ? filteredPosts.map((item)=>{
             return <Post key={item._id} post={item}/>

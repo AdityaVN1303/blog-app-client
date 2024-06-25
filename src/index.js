@@ -23,10 +23,12 @@ import EditUser from './components/EditUser';
 // protecting routes using stores --- #
 // edit and delete posts option --- #
 // edit userinfo option --- #
-// myblogs section 
-// View Count 
-// Popluar posts by view Count
-// Latest Posts 
+// myblogs section --- #
+// View Count --- #
+// Popluar posts by view Count --- #
+// Latest Posts --- #
+// Like --- #
+// Comment
 
 
 

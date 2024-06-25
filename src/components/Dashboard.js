@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { FaRegEdit } from 'react-icons/fa';
+import { FaRegEdit , FaHeart } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux'
 import { useNavigate , Link } from 'react-router-dom';
 import DialogBox from './DialogBox';
+import { IoEye } from "react-icons/io5";
 
 
 const Dashboard = () => {
@@ -37,7 +38,7 @@ const Dashboard = () => {
             }
         }
         getMyPosts();
-      }, [])
+      }, [userId])
 
       const handleCancel = ()=>{
         setDialog(false);
@@ -60,7 +61,7 @@ const Dashboard = () => {
             <h1 className='font-bold text-3xl mb-10'>My Blogs</h1>
             {
                 postList.length > 0 && postList.map((item)=>{
-                    return <div className="post space-y-5">
+                    return <div key={item?._id} className="post space-y-5">
                     {dialog && <DialogBox handleCancel={handleCancel} id={item?._id}/>}
                     <div className="inner flex justify-between items-center">
                     <div className="post-info flex items-center space-x-3">
@@ -68,6 +69,16 @@ const Dashboard = () => {
                     <h1 className='font-bold text-2xl'>{item?.title}</h1>
                     </div>
                     <div className="edit flex space-x-5 items-center text-2xl">
+                    <div className="views flex items-center space-x-5">
+                    <div className='flex items-center space-x-1'>
+                    <FaHeart/>
+                    <p>{item?.likes?.length}</p>
+                    </div>
+                    <div className='flex items-center space-x-1'>
+                    <IoEye/>
+                    <p>{item?.viewCount}</p>
+                    </div>
+                    </div>
                     <Link to={`/create/${item?._id}`}><FaRegEdit className='cursor-pointer'/></Link>
                     <MdDelete onClick={()=>{setDialog(true)}} className='cursor-pointer'/>
                     </div>

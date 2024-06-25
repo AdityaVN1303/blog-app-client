@@ -8,7 +8,7 @@ const Post = ({post}) => {
         {
           post && <>
           <Link className='grid grid-cols-1 lg:grid-cols-3 mb-5 space-y-2 lg:space-x-5 px-5' to={`/post/${post?._id}`}>
-          <img src={`http://localhost:8000/${post?.cover}`} alt="banner" className='col-span-1 rounded-md h-52 object-cover' />
+          <img src={`http://localhost:8000/${post?.cover}`} alt="banner" className='col-span-1 rounded-md h-52 object-cover w-full' />
         <div className="info col-span-2 space-y-3">
           <h1 className='font-bold text-2xl'>{post?.title}</h1>
           <div className="details flex space-x-3 font-semibold text-sm">
@@ -17,7 +17,7 @@ const Post = ({post}) => {
             <p className='bg-blue-500 text-white px-2 rounded-xl'>{post?.tag}</p>
           </div>
           <p className=''>
-            {post?.description.slice(0 ,350)}
+            {post?.description.slice(0 ,350)}...
             </p>
         </div>
           </Link>
