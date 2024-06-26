@@ -21,7 +21,7 @@ const Login = () => {
       credentials : 'include'
     })
     const answer = await response.json();
-    console.log(answer);
+    // console.log(answer);
     if (answer?.error) {
       toast(answer.error);
     }

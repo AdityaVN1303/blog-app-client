@@ -12,6 +12,7 @@ const PostList = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [popularPosts, setPopularPosts] = useState([]);
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const [isTagActive, setIsTagActive] = useState(false);
 
   useEffect(() => {
     const getPosts = async ()=>{
@@ -59,11 +60,13 @@ const PostList = () => {
   const _onSelect = (option)=>{
     if (option.value === 'All' ) {
       setFilteredPosts(posts);
+      setIsTagActive(false);
 
     }
     else{
       const filteredValues = posts.filter((item)=>item.tag === option.value);
       setFilteredPosts(filteredValues);
+      setIsTagActive(true);
     }
   }
   
@@ -75,7 +78,7 @@ const PostList = () => {
       <Dropdown options={options} value={defaultOption} onChange={_onSelect} placeholder="Select an option" />
       </div>
 
-      {!isSearchActive && <div className="popular">
+      {(!isSearchActive && !isTagActive) && <div className="popular">
         <h1 className='font-bold text-3xl mt-5 text-white bg-gradient-to-r from-slate-400 to-indigo-600 rounded-md w-full p-2'>Popular Posts</h1>
         <div className=' h-[28rem] mb-10'>
         {popularPosts.length !== 0 &&
