@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FaRegEdit , FaHeart } from 'react-icons/fa';
+import { FaRegEdit , FaHeart, FaComment } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux'
 import { useNavigate , Link } from 'react-router-dom';
@@ -70,11 +70,18 @@ const Dashboard = () => {
                     </div>
                     <div className="edit flex space-x-5 items-center text-2xl">
                     <div className="views flex items-center space-x-5">
-                    <div className='flex items-center space-x-1'>
+                    <div className='comment'>
+                   <Link className='flex items-center space-x-1' to={`/comments/${item?._id}`}>
+
+                   <FaComment />
+                   <p>{item?.comments?.length}</p>
+                   </Link>
+                    </div>
+                    <div className='likes flex items-center space-x-1'>
                     <FaHeart/>
                     <p>{item?.likes?.length}</p>
                     </div>
-                    <div className='flex items-center space-x-1'>
+                    <div className='views flex items-center space-x-1'>
                     <IoEye/>
                     <p>{item?.viewCount}</p>
                     </div>

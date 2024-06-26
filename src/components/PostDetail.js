@@ -15,8 +15,12 @@ const PostDetail = () => {
   const [dialog, setDialog] = useState(false);
   const [likeStatus, setLikeStatus] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [comment, setComment] = useState("");
+  const [commentList, setCommentList] = useState([]);
+  const [commentCount, setCommentCount] = useState(0);
 
   const userId = useSelector((store)=>store.auth.userId);
+  const user = useSelector((store)=>store.auth.user);
 
   const {id} = useParams();
 
@@ -30,6 +34,8 @@ const PostDetail = () => {
         setData(answer);
         setLikeCount(answer?.likes?.length);
         setAuthorId(answer.author._id);
+        setCommentList(answer.comments);
+        setCommentCount(answer.comments.length);
 
         console.log(answer.likes);
         for (let i=0; i<answer.likes.length; i++) {
@@ -92,6 +98,38 @@ const PostDetail = () => {
       }
     }
   }
+
+  const sendComment = async ()=>{
+   if (comment) {
+    // console.log(comment);
+    try {
+
+      const response = await fetch(`http://localhost:8000/comment/${id}` , {
+        method : 'PUT',
+        body : JSON.stringify({
+          comment,
+          username : user.username , 
+          userImage : user.image ,
+          author : authorId
+        }),
+        headers : {'Content-Type' : 'application/json'},
+        credentials : 'include'
+      })
+      const answer = await response.json();
+      // console.log(answer);
+      if (answer?._id) {
+        setCommentCount(answer.comments.length);
+        toast("Commented Successfully !");
+        setComment("");
+        setCommentList(answer.comments);
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+   }
+  }
+
   
 
   return (
@@ -129,6 +167,39 @@ const PostDetail = () => {
         <p className='text-sm'>{data?.description}</p>
         <hr />
         <div dangerouslySetInnerHTML={{__html : data?.essay}}/>
+        <div className="comment-section">
+        { userId &&
+          <div className="commentSend my-5 flex items-center justify-center w-full">
+          <input value={comment} onChange={(e)=>{setComment(e.target.value)}} type="text" className='p-2 border border-slate-400 bg-transparent w-3/4' />
+          <p onClick={sendComment}  className='font-semibold cursor-pointer bg-blue-500 text-white p-2'>Comment</p>
+        </div>}
+        { commentList.length > 0 ? <div className="comment-list my-5">
+          <h1 className='font-bold text-xl mb-5'>Comments ({commentCount})</h1>
+          <div className="list space-y-5">
+            {
+              commentList && commentList.map((item)=>{
+                return <div key={item?._id} className="single-comment space-y-1">
+            <div className='flex justify-start space-x-10 items-center'>
+              <div className="userinfo flex space-x-2 items-center">
+                <img src={`http://localhost:8000/${item?.userImage}`} className='w-6 h-6 rounded-full object-cover' alt="commnet-banner" />
+                <p className="name text-sm">{item?.username}</p>
+                {
+                  item?.isAdmin && <p className='font-bold text-sm text-yellow-300'>(Admin)</p>
+                }
+              </div>
+              <div className="comment font-semibold text-lg">
+                {item?.text}
+              </div>
+            </div>
+              <hr />
+            </div>
+              })
+            }
+            
+          </div>
+        </div> : <h1 className='text-center font-bold text-3xl'>No Comments</h1>
+        }
+        </div>
        
         </>
       }

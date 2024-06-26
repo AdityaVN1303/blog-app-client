@@ -16,6 +16,7 @@ import store from './utils/store';
 import EditPost from './components/EditPost';
 import Dashboard from './components/Dashboard';
 import EditUser from './components/EditUser';
+import Comment from './components/Comment';
 
 
 // search --- #
@@ -28,7 +29,7 @@ import EditUser from './components/EditUser';
 // Popluar posts by view Count --- #
 // Latest Posts --- #
 // Like --- #
-// Comment
+// Comment --- #
 
 
 
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path : "/dashboard",
         element : <Dashboard/>
+      } , 
+      {
+        path : "/comments/:id",
+        element : <Comment/>
       } , 
     ]
   } , 
