@@ -43,7 +43,7 @@ const PostList = () => {
     setIsSearchActive(true);
     console.log(posts[0]);
     if (search) {
-      const filteredValues = posts.filter((item)=>item.title.toLowerCase().includes(search))
+      const filteredValues = posts.filter((item)=>item.title.toLowerCase().includes(search.toLowerCase()))
     setFilteredPosts(filteredValues);
     }
     else{
