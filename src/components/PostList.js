@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Post from './Post'
 import Dropdown from 'react-dropdown';
+import Spinner from './Spinner'
 import 'react-dropdown/style.css';
-// import Carousal from './Carousal';
-import { Carousel } from 'flowbite-react';
+import { Carousel} from 'flowbite-react';
 import { Link } from 'react-router-dom';
 
 const PostList = () => {
@@ -17,7 +17,7 @@ const PostList = () => {
   useEffect(() => {
     const getPosts = async ()=>{
       try {
-        const response = await fetch('http://localhost:8000/post');
+        const response = await fetch('https://blog-app-server-red.vercel.app/post');
       const answer = await response.json();
       console.log(answer);
       setPosts(answer);
@@ -81,20 +81,21 @@ const PostList = () => {
       {(!isSearchActive && !isTagActive) && <div className="popular">
         <h1 className='font-bold text-3xl mt-5 text-white bg-gradient-to-r from-slate-400 to-indigo-600 rounded-md w-full p-2'>Popular Posts</h1>
         <div className=' h-[28rem] mb-10'>
-        {popularPosts.length !== 0 &&
+        {popularPosts.length !== 0 ?
         <Carousel slideInterval={2000} className='h-full' indicators={false}>
-          {
-            popularPosts.map((item)=>{
+          { popularPosts.map((item)=>{
               return <Link key={item?._id} className='flex flex-col items-center space-y-5 relative rounded-md' to={`/post/${item?._id}`}>
                   <h1 className='font-bold text-3xl absolute top-10 text-white p-1 bg-blue-400 shadow-2xl'>{item?.title}</h1>
-                  <img src={`http://localhost:8000/${item?.cover}`} className='w-full rounded-md object-cover h-[26rem]'  alt="..." />
+                  <img src={`https://blog-app-server-red.vercel.app/${item?.cover}`} className='w-full rounded-md object-cover h-[26rem]'  alt="..." />
                 </Link>
           
             })
           }
-        </Carousel>}
+        </Carousel> : <Spinner/>
+        }
         </div>
-      </div>}
+      </div>
+     }
       <h1 className='font-bold text-3xl mb-5 text-white bg-gradient-to-r from-slate-400 to-indigo-600 rounded-md w-full p-2'>Latest Posts</h1>
         {
           filteredPosts.length > 0 ? filteredPosts.map((item)=>{

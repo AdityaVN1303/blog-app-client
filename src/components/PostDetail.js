@@ -7,6 +7,7 @@ import { MdDelete } from 'react-icons/md';
 import { FaHeart, FaRegEdit, FaRegHeart } from "react-icons/fa";
 import DialogBox from './DialogBox';
 import { toast } from 'react-toastify';
+import Spinner from './Spinner';
 
 const PostDetail = () => {
 
@@ -28,7 +29,7 @@ const PostDetail = () => {
     const getPostDetails = async ()=>{
       window.scrollTo(0 , 0);
       try {
-        const response = await fetch("http://localhost:8000/post/" + id);
+        const response = await fetch("https://blog-app-server-red.vercel.app/post/" + id);
         const answer = await response.json();
         console.log(answer?.viewCount);
         setData(answer);
@@ -64,7 +65,7 @@ const PostDetail = () => {
       try {
         // const data = JSON.stringify({userId , id});
         console.log(userId);
-        const response = await fetch(`http://localhost:8000/like/${id}` , {
+        const response = await fetch(`https://blog-app-server-red.vercel.app/like/${id}` , {
           method : 'PUT',
           headers : {'Content-Type' : 'application/json'},
           credentials : 'include'
@@ -82,7 +83,7 @@ const PostDetail = () => {
     else{
       try {
         console.log(userId);
-        const response = await fetch(`http://localhost:8000/unlike/${id}` , {
+        const response = await fetch(`https://blog-app-server-red.vercel.app/unlike/${id}` , {
           method : 'PUT',
           headers : {'Content-Type' : 'application/json'},
           credentials : 'include'
@@ -104,7 +105,7 @@ const PostDetail = () => {
     // console.log(comment);
     try {
 
-      const response = await fetch(`http://localhost:8000/comment/${id}` , {
+      const response = await fetch(`https://blog-app-server-red.vercel.app/comment/${id}` , {
         method : 'PUT',
         body : JSON.stringify({
           comment,
@@ -136,7 +137,7 @@ const PostDetail = () => {
     <div className="post-content max-w-3xl mx-auto px-5 my-5 space-y-3">
       {dialog && <DialogBox handleCancel={handleCancel} id={id}/>}
       {
-        data && <>
+        data?.cover ? <>
         {
           authorId === userId &&
           <div className='flex items-center '>
@@ -146,7 +147,7 @@ const PostDetail = () => {
         
         }
         <h1 className='font-bold text-5xl mb-5'>{data?.title}</h1>
-        <img src={`http://localhost:8000/${data?.cover}`} alt="post-cover" />
+        <img src={`https://blog-app-server-red.vercel.app/${data?.cover}`} alt="post-cover" />
         <div className="info flex justify-start space-x-3 items-center my-2">
           <p className='bg-blue-500 text-white px-1'>{data?.author?.username}</p>
           <p className='bg-blue-500 text-white px-1'>{data?.tag}</p>
@@ -181,7 +182,7 @@ const PostDetail = () => {
                 return <div key={item?._id} className="single-comment space-y-1">
             <div className='flex justify-start space-x-10 items-center'>
               <div className="userinfo flex space-x-2 items-center">
-                <img src={`http://localhost:8000/${item?.userImage}`} className='w-6 h-6 rounded-full object-cover' alt="commnet-banner" />
+                <img src={`https://blog-app-server-red.vercel.app/${item?.userImage}`} className='w-6 h-6 rounded-full object-cover' alt="commnet-banner" />
                 <p className="name text-sm">{item?.username}</p>
                 {
                   item?.isAdmin && <p className='font-bold text-sm text-yellow-300'>(Admin)</p>
@@ -201,7 +202,7 @@ const PostDetail = () => {
         }
         </div>
        
-        </>
+        </> : <Spinner/>
       }
     </div>
   )

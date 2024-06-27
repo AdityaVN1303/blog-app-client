@@ -18,8 +18,12 @@ const Header = ({clicked , mode}) => {
   useEffect(() => {
     const getProfilePic = async ()=>{
      try {
-      const response = await fetch('http://localhost:8000/user/'+userId , {
-        credentials : 'include'
+      const response = await fetch('https://blog-app-server-red.vercel.app/user/'+userId , {
+        credentials : 'include',
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        }
       })
 
       const answer = await response.json();
@@ -36,7 +40,7 @@ const Header = ({clicked , mode}) => {
 
   const logout = async ()=>{
    try {
-    const response = await fetch("http://localhost:8000/logout" , {
+    const response = await fetch("https://blog-app-server-red.vercel.app/logout" , {
       method : 'POST',
       credentials : 'include'
     })

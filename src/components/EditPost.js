@@ -52,7 +52,7 @@ const EditPost = () => {
   useEffect(() => {
     const getEditData = async ()=>{
         try {
-            const response = await fetch("http://localhost:8000/post/" + id);
+            const response = await fetch("https://blog-app-server-red.vercel.app/post/" + id);
             const answer = await response.json();
             console.log(answer);
             if (answer) {
@@ -93,7 +93,7 @@ const EditPost = () => {
       }
 
 
-      const response = await fetch("http://localhost:8000/post" , {
+      const response = await fetch("https://blog-app-server-red.vercel.app/post" , {
         method : 'PUT',
         body : data, 
         credentials : 'include'

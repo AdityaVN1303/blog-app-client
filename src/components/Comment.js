@@ -2,6 +2,7 @@ import React, { useState , useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { MdDelete } from 'react-icons/md';
 import {toast} from 'react-toastify'
+import Spinner from './Spinner';
 
 const Comment = () => {
     
@@ -10,7 +11,7 @@ const Comment = () => {
 
     const handleDelete = async (userId)=>{
         try {
-            const response = await fetch(`http://localhost:8000/comment?userId=${userId}&postId=${id}` , {
+            const response = await fetch(`https://blog-app-server-red.vercel.app/comment?userId=${userId}&postId=${id}` , {
               method : 'DELETE',
               headers : {'Content-Type' : 'application/json'},
               credentials : 'include'
@@ -28,7 +29,7 @@ const Comment = () => {
     useEffect(() => {
         const getPostDetails = async ()=>{
           try {
-            const response = await fetch("http://localhost:8000/post/" + id);
+            const response = await fetch("https://blog-app-server-red.vercel.app/post/" + id);
             const answer = await response.json();
             setData(answer);
     
@@ -42,7 +43,7 @@ const Comment = () => {
   return (
     <div className="comment max-w-5xl mx-auto px-5">
         {
-            data && <>
+            data?.title ? <>
             <h1 className='font-bold text-3xl my-5'>
             {data?.title}
         </h1>
@@ -55,7 +56,7 @@ const Comment = () => {
                         <div className='flex justify-between items-center my-2'>
                           <div className='flex justify-start space-x-10 items-center my-2'>
                           <div className="userinfo flex space-x-2 items-center">
-                            <img src={`http://localhost:8000/${item?.userImage}`} className='w-10 h-10 rounded-full object-cover' alt="commnet-banner" />
+                            <img src={`https://blog-app-server-red.vercel.app/${item?.userImage}`} className='w-10 h-10 rounded-full object-cover' alt="commnet-banner" />
                             <p className="name text-lg">{item?.username}</p>
                           </div>
                           <div className="comment font-semibold text-lg">
@@ -72,7 +73,7 @@ const Comment = () => {
                 }
             </div>
         </div>
-            </>
+            </> : <Spinner/>
         }
     </div>
   )

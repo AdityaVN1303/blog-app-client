@@ -68,7 +68,7 @@ const CreatePost = () => {
       data.append('tag' , tag);
       // console.log(files);
 
-      const response = await fetch("http://localhost:8000/post" , {
+      const response = await fetch("https://blog-app-server-red.vercel.app/post" , {
         method : 'POST',
         body : data, 
         credentials : 'include'

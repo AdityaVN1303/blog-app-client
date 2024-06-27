@@ -8,7 +8,7 @@ const DialogBox = ({handleCancel , id}) => {
 
     const deletePost = async ()=>{
         try {
-          const response = await fetch("http://localhost:8000/post/"+id , {
+          const response = await fetch("https://blog-app-server-red.vercel.app/post/"+id , {
             method : 'DELETE', 
             credentials : 'include'
           }

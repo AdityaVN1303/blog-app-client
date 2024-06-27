@@ -19,7 +19,7 @@ const Register = () => {
       data.append('file' , files);
       data.append('password' , password);
 
-      const response = await fetch("http://localhost:8000/register" , {
+      const response = await fetch("https://blog-app-server-red.vercel.app/register" , {
         method : 'POST',
         body : data
       })

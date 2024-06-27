@@ -14,7 +14,7 @@ const EditUser = () => {
     const getEditData = async ()=>{
         console.log()
         try {
-            const response = await fetch("http://localhost:8000/user/" + id , {
+            const response = await fetch("https://blog-app-server-red.vercel.app/user/" + id , {
                 credentials : 'include'
             });
             const answer = await response.json();
@@ -38,7 +38,7 @@ const EditUser = () => {
         data.append('file' , files);
       }
 
-      const response = await fetch("http://localhost:8000/register/"+id , {
+      const response = await fetch("https://blog-app-server-red.vercel.app/register/"+id , {
         method : 'PUT',
         body : data
       })
