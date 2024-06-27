@@ -64,12 +64,12 @@ const Dashboard = () => {
                 postList.length > 0 ? postList.map((item)=>{
                     return <div key={item?._id} className="post space-y-5">
                     {dialog && <DialogBox handleCancel={handleCancel} id={item?._id}/>}
-                    <div className="inner flex justify-between items-center">
+                    <div className="inner flex lg:flex-row flex-col justify-between items-center">
                     <div className="post-info flex items-center space-x-3">
                         <img src={`https://blog-app-server-red.vercel.app/${item?.cover}`} className='w-10 h-10 rounded-full object-cover' alt="post-img" />
                     <h1 className='font-bold text-2xl'>{item?.title}</h1>
                     </div>
-                    <div className="edit flex space-x-5 items-center text-2xl">
+                    <div className="edit flex space-x-5 items-center ml-10 text-2xl">
                     <div className="views flex items-center space-x-5">
                     <div className='comment'>
                    <Link className='flex items-center space-x-1' to={`/comments/${item?._id}`}>

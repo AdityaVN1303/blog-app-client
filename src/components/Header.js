@@ -59,7 +59,7 @@ const Header = ({clicked , mode}) => {
   
 
   return (
-    <div className="header flex flex-col z-50 lg:flex-row space-y-2 justify-between items-center px-10 py-2 bg-blue-700 text-white fixed left-0 right-0 top-0">
+    <div className="header flex  z-50 space-y-2 justify-between items-center px-10 py-2 bg-blue-700 text-white fixed left-0 right-0 top-0">
         <h1 className='font-bold text-3xl'><Link to="/">MyBlog</Link></h1>
         <div className="user-entry space-x-3 text-lg flex">
         <div className="mode rounded-full bg-blue-400 p-1" onClick={clicked}>

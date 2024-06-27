@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Post from './Post'
 import Dropdown from 'react-dropdown';
-import Spinner from './Spinner'
 import 'react-dropdown/style.css';
 import { Carousel} from 'flowbite-react';
 import { Link } from 'react-router-dom';
+import ShimmerHome from './ShimmerHome';
 
 const PostList = () => {
 
@@ -91,7 +91,7 @@ const PostList = () => {
           
             })
           }
-        </Carousel> : <Spinner/>
+        </Carousel> : <ShimmerHome/>
         }
         </div>
       </div>
@@ -100,7 +100,7 @@ const PostList = () => {
         {
           filteredPosts.length > 0 ? filteredPosts.map((item)=>{
             return <Post key={item._id} post={item}/>
-          }) : <h1 className='text-center font-bold text-2xl'>No Posts Available</h1>
+          }) : posts.length !== 0 ? <h1 className='text-center font-bold text-2xl'>No Posts Available</h1> : <ShimmerHome/>
         }
     </div>
   )

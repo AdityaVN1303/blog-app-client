@@ -58,7 +58,7 @@ const EditUser = () => {
   }
 
   return (
-    <div className="register h-screen w-screen bg-slate-900 text-white flex justify-center items-center">
+    <div className="register px-5 h-screen w-screen bg-slate-900 text-white flex justify-center items-center">
       <div className="card p-5 rounded-md flex flex-col space-y-5 bg-blue-900">
       <div className="flex justify-between items-center space-x-2">
       <FaImage className='text-3xl'/>
