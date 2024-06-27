@@ -77,7 +77,7 @@ const CreatePost = () => {
       console.log(answer);
 
       if (answer?.error) {
-        toast(error);
+        toast(answer?.error);
       }
 
       if (answer?.title) {

@@ -38,7 +38,7 @@ const Comment = () => {
           }
         }
         getPostDetails();
-      }, [])
+      }, [id])
 
   return (
     <div className="comment max-w-5xl mx-auto px-5">

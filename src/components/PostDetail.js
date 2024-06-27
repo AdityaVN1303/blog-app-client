@@ -52,7 +52,7 @@ const PostDetail = () => {
       }
     }
     getPostDetails();
-  }, [])
+  }, [id , userId])
   
   
 

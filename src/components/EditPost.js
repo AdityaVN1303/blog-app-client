@@ -66,7 +66,7 @@ const EditPost = () => {
         }
     }
     getEditData()
-  }, [])
+  }, [id])
   
   
 
@@ -102,7 +102,7 @@ const EditPost = () => {
       console.log(answer);
 
       if (answer?.error) {
-        toast(error);
+        toast(answer?.error);
       }
 
       if (answer?.acknowledged) {

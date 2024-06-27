@@ -16,7 +16,7 @@ const DialogBox = ({handleCancel , id}) => {
           const answer = await response.json();
           console.log(answer);
           if (answer?.error) {
-            toast(error);
+            toast(answer?.error);
           }
           if (answer.title) {
             toast("Post Deleted Successfully !");

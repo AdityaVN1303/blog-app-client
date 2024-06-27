@@ -28,7 +28,7 @@ const EditUser = () => {
         }
     }
     getEditData()
-  }, [])
+  }, [id])
 
   const handleRegister = async ()=>{
     try {

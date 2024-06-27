@@ -36,7 +36,7 @@ const Header = ({clicked , mode}) => {
      }
     }
     getProfilePic();
-  }, [])
+  }, [userId , dispatch])
 
   const logout = async ()=>{
    try {
