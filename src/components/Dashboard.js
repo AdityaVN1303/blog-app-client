@@ -5,8 +5,6 @@ import { useSelector } from 'react-redux'
 import { useNavigate , Link } from 'react-router-dom';
 import DialogBox from './DialogBox';
 import { IoEye } from "react-icons/io5";
-import Spinner from './Spinner';
-
 
 const Dashboard = () => {
 
@@ -93,7 +91,7 @@ const Dashboard = () => {
                     </div>
                     <hr />
                 </div>
-                }) : <Spinner/>
+                }) : <h1 className='font-bold text-2xl my-10 text-center'>You have not written any Posts !</h1>
             }
            
         </div>
