@@ -56,7 +56,7 @@ const Comment = () => {
                         <div className='flex justify-between items-center my-2'>
                           <div className='flex justify-start space-x-10 items-center my-2'>
                           <div className="userinfo flex space-x-2 items-center">
-                            <img src={`https://blog-app-server-red.vercel.app/${item?.userImage}`} className='w-10 h-10 rounded-full object-cover' alt="commnet-banner" />
+                            <img src={item?.userImage} className='w-10 h-10 rounded-full object-cover' alt="commnet-banner" />
                             <p className="name text-lg">{item?.username}</p>
                           </div>
                           <div className="comment font-semibold text-lg">

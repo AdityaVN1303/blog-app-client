@@ -86,7 +86,7 @@ const PostList = () => {
           { popularPosts.map((item)=>{
               return <Link key={item?._id} className='flex flex-col items-center space-y-5 relative rounded-md' to={`/post/${item?._id}`}>
                   <h1 className='font-bold text-3xl absolute top-10 text-white p-1 bg-blue-400 shadow-2xl'>{item?.title}</h1>
-                  <img src={`https://blog-app-server-red.vercel.app/${item?.cover}`} className='w-full rounded-md object-cover h-[26rem]'  alt="..." />
+                  <img src={item?.cover} className='w-full rounded-md object-cover h-[26rem]'  alt="..." />
                 </Link>
           
             })

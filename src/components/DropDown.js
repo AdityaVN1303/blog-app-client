@@ -14,7 +14,7 @@ const DropDown = ({logout , image}) => {
 
   return (
     <div className='rounded-full relative'>
-        <img src={image ? `https://blog-app-server-red.vercel.app/${image}` : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'} alt="user-img" className='w-12 h-12 object-cover rounded-full cursor-pointer' onClick={()=>{setDrop(!drop)}} />
+        <img src={image ? image : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'} alt="user-img" className='w-12 h-12 object-cover rounded-full cursor-pointer' onClick={()=>{setDrop(!drop)}} />
             <div className={`${drop ? "inline-flex" : "hidden"} w-32 absolute left-[-40px] top-[56px] flex flex-col text-center space-y-2 bg-blue-500 text-white`}>
                 <button><Link to="/dashboard">Dashboard</Link></button>
                 <hr/>

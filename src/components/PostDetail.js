@@ -147,7 +147,7 @@ const PostDetail = () => {
         
         }
         <h1 className='font-bold text-5xl mb-5'>{data?.title}</h1>
-        <img src={`https://blog-app-server-red.vercel.app/${data?.cover}`} alt="post-cover" />
+        <img src={data?.cover} alt="post-cover" />
         <div className="info flex justify-start space-x-3 items-center my-2">
           <p className='bg-blue-500 text-white px-1'>{data?.author?.username}</p>
           <p className='bg-blue-500 text-white px-1'>{data?.tag}</p>
@@ -182,7 +182,7 @@ const PostDetail = () => {
                 return <div key={item?._id} className="single-comment space-y-1">
             <div className='flex justify-start space-x-10 items-center'>
               <div className="userinfo flex space-x-2 items-center">
-                <img src={`https://blog-app-server-red.vercel.app/${item?.userImage}`} className='w-6 h-6 rounded-full object-cover' alt="commnet-banner" />
+                <img src={item?.userImage} className='w-6 h-6 rounded-full object-cover' alt="commnet-banner" />
                 <p className="name text-sm">{item?.username}</p>
                 {
                   item?.isAdmin && <p className='font-bold text-sm text-yellow-300'>(Admin)</p>
