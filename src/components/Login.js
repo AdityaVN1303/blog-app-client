@@ -46,6 +46,7 @@ const Login = () => {
             setEmail(e.target.value);
           }}
           placeholder="Email"
+          value={email}
           type="text"
           className="p-2 rounded-md text-black"
         />
@@ -55,6 +56,7 @@ const Login = () => {
           }}
           placeholder="Password"
           type="text"
+          value={password}
           className="p-2 rounded-md text-black"
         />
         <button
